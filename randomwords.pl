@@ -14,8 +14,8 @@ use warnings;
 
 sub random_line {
     my $line;
-    my $path = shift
-    open(my $fh, '<:encoding(UTF-8)', $path) or die " could not open $path";
+    my $path = shift;
+    open(my $fh, '<:encoding(UTF-8)', $path) or die "Could not open file '$path' $!";
     srand;
     rand($.) < 1 && ($line = $_) while <$fh>;
     # $line is the random line
