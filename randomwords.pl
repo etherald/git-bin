@@ -19,7 +19,9 @@ sub random_line {
     srand;
     rand($.) < 1 && ($line = $_) while <$fh>;
     # $line is the random line
+    chomp($line);
     $line;
 }
 
-print random_line '/usr/share/dict/words';
+my $rpt = shift @ARGV;
+print (random_line('/usr/share/dict/words'), ' ') for (1...$rpt);print "\n";
