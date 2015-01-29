@@ -8,12 +8,10 @@ use File::Random qw/random_file/;
 #TODO: real options
 #TODO: choose list of dirs (multiple -d option)
 
-
 my $pat = '^.+$';
 
 GetOptions(
     'p|pattern=s' => \$pat,
-    #'directory=s' => $dir
     );
 
 my @dirs = (shift @ARGV or cwd());
