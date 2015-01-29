@@ -1,5 +1,5 @@
 #!/bin/sh
 for i in $@
 do
-    shuf /usr/share/dict/words.pre-dictionaries-common | head -n $i
+    shuf /usr/share/dict/words | head -n $i
 done
