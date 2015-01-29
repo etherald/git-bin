@@ -1,0 +1,27 @@
+#!/usr/bin/perl -w
+# xurl - extract unique, sorted list of links from URL
+
+use strict;
+use HTML::LinkExtor;
+use Getopt::Long;
+use LWP::Simple;
+
+my %seen;
+my $pattern = '';
+GetOptions('p|pattern=s' => \$pattern);
+my $base_url = shift @ARGV;
+my $parser = HTML::LinkExtor->new(undef, $base_url);
+$parser->parse(get($base_url))->eof;
+my @links = $parser->links;
+foreach my $linkarray (@links) {
+    my @element = @$linkarray;
+    my $elt_type = shift @element;
+
+    while (@element) {
+	my ($attr_name, $attr_value) = splice(@element, 0, 2);
+	($seen{$attr_value}++) if $attr_value =~ /$pattern/;
+    }
+
+}
+
+for (sort keys %seen) { print $_, "\n" }

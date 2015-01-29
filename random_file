@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Getopt::Long;
+use Cwd;
+use File::Random qw/random_file/;
+
+#TODO: real options
+#TODO: choose list of dirs (multiple -d option)
+
+my $dir = (shift or cwd());
+my $pat = (shift or '.+');
+GetOptions(
+    'pattern=s' => $pat,
+    'directory=s' => $dir
+    #sub { push(@{$dir{$_[1]}}, $_[2]) }
+    );
+
+my $random_file = random_file(-dir       => $dir,
+                              -check => qr/$pat/,
+                              -recursive => 1);
+print "$random_file\n";
