@@ -6,7 +6,6 @@ use Cwd;
 use File::Random qw/random_file/;
 
 #TODO: choose list of dirs (multiple -d option)
-#TODO: num files option
 
 my $pat = '^.+$';
 my $num = 1;
@@ -16,14 +15,16 @@ GetOptions(
     'n|number=i' => \$num,
     );
 
-my @dirs = (shift @ARGV or cwd());
-
 while ($num) {
-    for my $dir (@dirs) {
-        my $random_file = random_file(-dir       => $dir,
-                                      -check => qr/$pat/,
-                                      -recursive => 1);
-        print "$random_file\n";
-    }
+    #    my @dirs = (shift @ARGV or cwd());
+    #my @dirs = map {@$_} $@ARGV;
+    #    my @dirs =
+    #    for my $dir (@dirs) {
+    my $dir = $ARGV[rand @ARGV] or cwd();
+    my $random_file = random_file(-dir       => $dir,
+                                  -check => qr/$pat/,
+                                  -recursive => 1);
+    print "$random_file\n";
+    #    }
     --$num;
 }
