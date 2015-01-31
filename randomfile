@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# recursively choose a number of files optionally matchinng a regex
+# recursively choose a number of files optionally matching a regex
 # from a directory or list of directories. defaults to cwd.
 # outputs absolute paths by default, relative with -r
 # use like so:
