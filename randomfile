@@ -5,20 +5,25 @@ use Getopt::Long;
 use Cwd;
 use File::Random qw/random_file/;
 
-#TODO: real options
 #TODO: choose list of dirs (multiple -d option)
+#TODO: num files option
 
 my $pat = '^.+$';
+my $num = 1;
 
 GetOptions(
     'p|pattern=s' => \$pat,
+    'n|number=i' => \$num,
     );
 
 my @dirs = (shift @ARGV or cwd());
 
-for my $dir (@dirs) {
-    my $random_file = random_file(-dir       => $dir,
-                                  -check => qr/$pat/,
-                                  -recursive => 1);
-    print "$random_file\n";
+while ($num) {
+    for my $dir (@dirs) {
+        my $random_file = random_file(-dir       => $dir,
+                                      -check => qr/$pat/,
+                                      -recursive => 1);
+        print "$random_file\n";
+    }
+    --$num;
 }
