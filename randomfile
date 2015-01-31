@@ -1,4 +1,11 @@
 #!/usr/bin/env perl
+
+# recursively choose a number of files optionally matchinng a regex
+# from a directory or list of directories. defaults to cwd.
+# outputs absolute paths by default, relative with -r
+# use like so:
+# randomfile -n 23 -p \(mp3\|ogg\|flac\)$ ~/music ~/music2
+
 use strict;
 use warnings;
 use Getopt::Long;
