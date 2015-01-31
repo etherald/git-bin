@@ -4,20 +4,31 @@ use warnings;
 use Getopt::Long;
 use Cwd;
 use File::Random qw/random_file/;
+use File::Spec;
+
+#TODO: output paths relative to cwd
 
 my $pat = '^.+$';
 my $num = 1;
+my $relative = 0;
 
 GetOptions(
     'p|pattern=s' => \$pat,
     'n|number=i' => \$num,
+    'r|relative' => \$relative,
     );
 
 while ($num) {
-    my $dir = $ARGV[rand @ARGV] or cwd();
-    my $random_file = random_file(-dir       => $dir,
-                                  -check => qr/$pat/,
-                                  -recursive => 1);
+    my $random_file;
+    my $dir;
+    do {
+	$dir = $ARGV[rand @ARGV] or cwd();
+        $random_file = random_file( -dir       => $dir,
+                                    -check => qr/$pat/,
+                                    -recursive => 1);
+    } until $random_file;
+    $random_file = "$dir/$random_file";
+    $random_file = File::Spec->abs2rel($random_file) if $relative;
     print "$random_file\n";
     --$num;
 }
