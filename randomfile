@@ -6,8 +6,6 @@ use Cwd;
 use File::Random qw/random_file/;
 use File::Spec;
 
-#TODO: output paths relative to cwd
-
 my $pat = '^.+$';
 my $num = 1;
 my $relative = 0;
