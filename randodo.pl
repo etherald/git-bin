@@ -6,19 +6,28 @@ use Cwd;
 use File::Random qw/random_file/;
 use File::Type;
 
+use constant DIR => $ENV{'HOME'} . '/txt/';
+
+my $dir = $ENV{'HOME'} . '/txt/';
 
 sub randomfile {
     my $pat = '^.+\.txt$'; #TODO: use file magic somehow to detect text files without extension
 
     #my @dirs = ((shift @ARGV) or cwd());
     #my @dirs = qw($ENV{'HOME'} . '/txt');
-    my $dir = $ENV{'HOME'} . '/txt/';
+    #my $dir = $ENV{'HOME'} . '/txt/';
     my $random_file = random_file(-dir       => $dir,
-                                  -check => sub { my $ft = File::Type->new()->checktype_filename($dir.$_); defined($ft) && $ft =~ /^text\//; },
+                                  -check => sub { File::Type->new()->checktype_filename($dir.$_) =~ /^text\//; },
                                   -recursive => 1);
-    print "$random_file\n";
+    #print "$random_file\n";
 
 }
 
-
-randomfile;
+sub dododo {
+    my $filez = '';
+    for my $i (0..3) {
+        $filez .= $dir.randomfile . ' ' ;
+    }
+    `/usr/bin/env dadadodo -c 3 $filez`;
+}
+print dododo;
