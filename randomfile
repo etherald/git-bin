@@ -1,24 +1,39 @@
 #!/usr/bin/env perl
+
+# recursively choose a number of files optionally matching a regex
+# from a directory or list of directories. defaults to cwd.
+# outputs absolute paths by default, relative with -r
+# use like so:
+# randomfile -n 23 -p \(mp3\|ogg\|flac\)$ ~/music ~/music2
+
 use strict;
 use warnings;
 use Getopt::Long;
 use Cwd;
 use File::Random qw/random_file/;
-
-#TODO: real options
-#TODO: choose list of dirs (multiple -d option)
+use File::Spec;
 
 my $pat = '^.+$';
+my $num = 1;
+my $relative = 0;
 
 GetOptions(
     'p|pattern=s' => \$pat,
+    'n|number=i' => \$num,
+    'r|relative' => \$relative,
     );
 
-my @dirs = (shift @ARGV or cwd());
-
-for my $dir (@dirs) {
-    my $random_file = random_file(-dir       => $dir,
-                                  -check => qr/$pat/,
-                                  -recursive => 1);
+while ($num) {
+    my $random_file;
+    my $dir;
+    do {
+	$dir = $ARGV[rand @ARGV] or cwd();
+        $random_file = random_file( -dir       => $dir,
+                                    -check => qr/$pat/,
+                                    -recursive => 1);
+    } until $random_file;
+    $random_file = "$dir/$random_file";
+    $random_file = File::Spec->abs2rel($random_file) if $relative;
     print "$random_file\n";
+    --$num;
 }
