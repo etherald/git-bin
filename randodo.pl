@@ -22,7 +22,7 @@ sub randomfile {
 sub dododo {
     my $filez = '';
     for my $i (0..3) {
-        $filez .= $dir.randomfile . ' ' ;
+        $filez .= "\"$dir".randomfile . '" ' ;
     }
     `/usr/bin/env dadadodo -c 3 $filez 2>/dev/null`;
 }
