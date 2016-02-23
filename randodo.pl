@@ -1,12 +1,14 @@
 #!/usr/bin/env perl
+
+# random 'fortune' using dadadodo.
+# set $dir to a location where there are text files.
+
 use strict;
 use warnings;
 use Getopt::Long;
 use Cwd;
 use File::Random qw/random_file/;
 use File::Type;
-
-use constant DIR => $ENV{'HOME'} . '/txt/';
 
 my $dir = $ENV{'HOME'} . '/txt/';
 
@@ -22,6 +24,7 @@ sub dododo {
     for my $i (0..3) {
         $filez .= $dir.randomfile . ' ' ;
     }
-    `/usr/bin/env dadadodo -c 3 $filez`;
+    `/usr/bin/env dadadodo -c 3 $filez 2>/dev/null`;
 }
+
 print dododo;
