@@ -15,13 +15,14 @@ use 5.010;
 my $outfile = $ENV{'HOME'}.'/.messagestest';
 my $recipients;
 my $format = "%s [%s]\n";
-my $message = join(' ',@ARGV);
 my $sender = 'nobody@'.hostname;
 
 # config file
 my $configpath = $ENV{'HOME'}.'/.titlerc';
 if (-e $configpath) {
     my $cfg = new Config::Simple($configpath);
+    $recipients = $cfg->param('recipients');
+    $outfile = $cfg->param('outfile');
 } else {
     print 'no config';
 }
@@ -33,6 +34,9 @@ GetOptions(
     's|sender=s' =>\$sender,
     );
 
+my $message = join(' ',@ARGV);
+
+if (!-e $outfile) open(my $fh,'>', $outfile);
 open(my $fh, '>>', $outfile) or die "Could not open file '$outfile' $!";
 printf $fh $format, ($message, scalar localtime);
 close $fh;
