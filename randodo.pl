@@ -13,9 +13,8 @@ sub randomfile {
     #my @dirs = ((shift @ARGV) or cwd());
     #my @dirs = qw($ENV{'HOME'} . '/txt');
     my $dir = $ENV{'HOME'} . '/txt/';
-    print $dir;
     my $random_file = random_file(-dir       => $dir,
-                                  -check => sub { my $ft = File::Type->new()->checktype_filename() =~ /^text\//; },
+                                  -check => sub { my $ft = File::Type->new()->checktype_filename($dir.$_); defined($ft) && $ft =~ /^text\//; },
                                   -recursive => 1);
     print "$random_file\n";
 
