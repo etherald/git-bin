@@ -12,7 +12,7 @@ use Sys::Hostname;
 use 5.010;
 
 # default defaults
-my $outfile = $ENV{'HOME'}.'/.messagestest';
+my $outfile = $ENV{'HOME'}.'/.messages';
 my $recipients;
 my $format = "%s [%s]\n";
 my $sender = 'nobody@'.hostname;
