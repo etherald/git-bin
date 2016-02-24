@@ -36,7 +36,6 @@ GetOptions(
 
 my $message = join(' ',@ARGV);
 
-if (!-e $outfile) open(my $fh,'>', $outfile);
 open(my $fh, '>>', $outfile) or die "Could not open file '$outfile' $!";
 printf $fh $format, ($message, scalar localtime);
 close $fh;
