@@ -14,7 +14,7 @@ my $dir = $ENV{'HOME'} . '/txt/';
 
 sub randomfile {
   my $random_file = random_file(-dir       => $dir,
-                                -check => sub { File::Type->new()->checktype_filename($dir.$_) =~ /^text\//; },
+                                -check => sub { File::Type->new()->checktype_filename($dir.$_) =~ /text/; },
                                 -recursive => 1);
   #print "$random_file\n";
 }
