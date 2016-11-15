@@ -2,13 +2,10 @@
 use strict;
 use warnings;
 use LWP::Simple;
+use 5.010;
 
-while (my $param = shift @ARGV) {
-    my $res = fetch_url($param);
-    print "$res\n";
-}
+print get shift @ARGV;
 
-sub fetch_url {
-    my $url = shift;
-    my $content = get($url);
-}
+# while (my $param = shift @ARGV) {
+#     say get($param);
+# }
